@@ -1,7 +1,7 @@
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
-import socket from "../socket/index.js";
+import socket from '../socket';
 
 const HomePage = () => {
     return (
