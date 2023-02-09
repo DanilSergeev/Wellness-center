@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage';
 import Header from './modules/Header';
 import Footer from './modules/Footer';
 import VideoRoomPage from './pages/VideoRoomPage';
+import ConnectionToVideoRoomPage from './pages/ConnectionToVideoRoomPage';
 
 function App() {
   return (
@@ -17,6 +18,8 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/videoRoom/:id" element={<VideoRoomPage />} />
+        <Route path="/videoRooms" element={<ConnectionToVideoRoomPage />} />
+        
       </Routes>
 
 

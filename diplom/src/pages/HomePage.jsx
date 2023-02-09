@@ -1,7 +1,6 @@
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
-import socket from '../socket';
 
 const HomePage = () => {
     return (
@@ -14,7 +13,7 @@ const HomePage = () => {
                         Some quick example text to build on the card title and make up the
                         bulk of the card's content.
                     </Card.Text>
-                    <Link to="/videoRoom" className='link_a'><Button variant="success">К комноте</Button></Link>
+                    <Link to="/videoRooms" className='link_a'><Button variant="success">К комноте</Button></Link>
                 </Card.Body>
             </Card>
         </main>
