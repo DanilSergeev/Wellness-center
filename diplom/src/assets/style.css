@@ -23,3 +23,10 @@ main{
 .marginCenter{
     margin: auto;
 }
+.videoRoomMain{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    height: 100vh;
+}
