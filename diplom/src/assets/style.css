@@ -1,32 +1,314 @@
-*{
+:root {
+    --heightCarusel: 620px;
+}
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-#root{
+
+body {
+    overflow-x: hidden;
+}
+
+#root {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background-color: rgb(246, 246, 249);
 }
-.wrapper{
+
+header {
+    border-bottom: 1px solid rgb(240, 240, 240);
+}
+
+.wrapper {
     max-width: 1224px;
     margin: 0 auto;
 }
-footer{
+
+footer {
     min-height: 10vh;
     background: rgb(35, 35, 35);
     margin-top: auto;
 }
-main{
+
+main {
+    min-height: 30vh;
+    width: 100%;
     height: 100%;
 }
-.marginCenter{
+
+.marginCenter {
     margin: auto;
 }
-.videoRoomMain{
+
+.videoRoomMain {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    min-height: 84.5vh;
+    background-color: #2F2D2E;
+}
+
+.videoWrapper {
+    width: 77%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.videoChat {
+    width: 23%;
+    background-color: #373536;
+    min-height: inherit;
+    display: flex;
+    flex-direction: column;
+}
+
+.formSendMessage {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-around;
+    padding: 12px;
+}
+
+.formSendMessage:last-child input {
+    width: 74%;
+}
+.formSendMessage button{
+    background-color: unset;
+    border: unset;
+    color: #e9e9e9;
+    font-size: 22px;
+}
+
+
+.videoChat div:first-child {
+    color: #a5a4a9;
+    font-size: 22px;
+    width: 100%;
+    background: #262626;
+    padding: 12px 16px;
+}
+
+.videoChat ul {
+    list-style: none;
+    padding: 20px;
+}
+
+.videoChat ul li {
+    background-color: #514F52;
+    margin-bottom: 2vh;
+    width: 100%;
+    min-height: 3rem;
+    padding: 6px 12px;
+    border-radius: 6px;
+}
+
+.videoChat ul li h6 {
+    color: #d16418;
+    font-family: system-ui;
+
+}
+
+.videoChat ul li p {
+    color: white;
+    font-family: system-ui;
+}
+
+.videoChat ul li div {
+    text-align: right;
+    color: rgb(227, 227, 227);
+    font-size: 13px;
+    font-weight: bold;
+}
+
+
+.caruselMain {
+    max-height: var(--heightCarusel);
+    width: 100%;
+}
+
+.carousel-item,
+.carousel-inner {
+    position: static;
+}
+
+.carousel-item-next,
+.carousel-item-prev,
+.carousel-item.active {
+    display: flex;
+    align-items: center;
+    max-height: var(--heightCarusel);
+
+}
+
+.caruselItemMe img {
+    position: relative;
+    width: 100%;
+}
+
+.cardCarusel {
+    padding: 16px 38px;
+    max-width: 29rem;
+    display: block;
+    margin: auto;
+    position: absolute;
+
+}
+
+.welcomCarusel {
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
-    height: 100vh;
+}
+
+.link_a {
+    text-decoration: none;
+    color: inherit;
+    transition: 0.1s all linear;
+}
+
+.link_a:hover {
+    color: #f63a07;
+}
+.link_a img{
+    background-size: cover;
+    height: initial;
+}
+
+ol {
+    padding-left: 0;
+}
+
+.connectionToVideoRoomMain ol li {
+    margin-bottom: 1vh;
+    padding: 6px;
+    display: flex;
+    justify-content: space-between;
+}
+.line {
+    height: 280px;
+    background: url(../assets/img/line.jpg);
+    border-bottom: 8px solid #f63a07;
+    overflow: hidden;
+    position: relative;
+}
+
+.line::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 1;
+}
+
+.line:hover::before {
+    opacity: 1;
+}
+
+.lineWrapper {
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: inherit;
+}
+.lineWrapper h1{
+    font-size: 40px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.lineWrapper p{
+    letter-spacing: 1px;
+    font-size: 16px;
+    line-height: 28px;
+    width: 30%;
+}
+.indent-top{
+    padding-top: 9vh;
+}
+.indent-top-sm{
+    padding-top: 4vh;
+}
+.indent-bot{
+    padding-bottom: 7vh;
+}
+.indent-bot-sm{
+    padding-bottom: 3vh;
+}
+.authSection{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.authSection > div, .authSection > form  {
+    width: 45%;
+
+}
+.authCard{
+    padding: 20px;
+}
+.authCardLinkLogo{
+    margin: 2vh auto auto auto;
+}
+.bg-color-white{
+    background-color: white;
+}
+.aboutUsPage section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.aboutUsPage section div{
+    max-width: 45%;
+    text-align: right;
+    overflow: hidden;
+}
+.aboutUsPage section div img{
+    max-height: 500px;
+}
+.aboutUsPage section div h2{
+    font-size: 38px;
+}
+.aboutUsPage section ul{
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    font-family: ui-monospace;
+}
+.aboutUsPage section ul li{
+    color: rgba(0, 0, 0, 0.741);
+    max-width: 86%;
+    text-align:justify;
+}
+.aboutUsPage section ul li div{
+    max-width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.aboutUsPage section ul li div h3{
+    font-size: 64px;
+    font-weight: bold;
+    color: #f63a07;
+    font-family: fantasy;
+    padding-right: 4vh;
+}
+.aboutUsPage section ul li div p{
+    font-family: system-ui;
+    color: black;
+    font-weight: 600;
+    font-size: 22px;
+    text-align: center;
 }
