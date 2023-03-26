@@ -19,7 +19,7 @@ const Header = () => {
                         <Nav className="me-auto">
                             <Nav.Link><Link to="/aboutUs" className='link_a' >О нас</Link></Nav.Link>
                             <Nav.Link><Link to="/contacts" className='link_a' >Контакты</Link></Nav.Link>
-                            <Nav.Link href="/videoRooms">Видео комнаты </Nav.Link>
+                            <Nav.Link className='link_a'  href="/videoRooms">Видео комнаты </Nav.Link>
                         </Nav>
                         <Nav>
                             <Nav.Link><Link to="/login" className='link_a' >Авторизация</Link></Nav.Link>

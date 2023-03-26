@@ -21,32 +21,33 @@ const ConnectionToVideoRoomPage = () => {
             }
         })
     }, [])
+    
 
-    return (<>
-
-        <main ref={rootNode}>
-            <Line title={"VIDEOS ROOMS"} >
-                Сэкономьте время и силы: консультации с врачом из любой точки мира
-            </Line>
-            <section className="indent-top wrapper connectionToVideoRoomMain">
-                <h2>Видео комнаты</h2>
-                <hr />
-                <ol>
-                    {
-                        rooms.map((item, index) =>
-                            <li key={item}>
-                                {index + 1 + " - "}
-                                {item}
-                                <Button onClick={() => { navigate("/videoRoom/" + item) }} variant="outline-dark">Присоединиться</Button>
-                            </li>
-                        )
-                    }
-                </ol>
-                <hr />
-                <Button onClick={() => { navigate("/videoRoom/" + v4()) }} variant="dark">Новая комната</Button>
-            </section>
-        </main>
-    </>
+    return (
+        <>
+            <main ref={rootNode}>
+                <Line title={"VIDEOS ROOMS"} >
+                    Сэкономьте время и силы: консультации с врачом из любой точки мира
+                </Line>
+                <section className="indent-top wrapper connectionToVideoRoomMain">
+                    <h2>Видео комнаты</h2>
+                    <hr />
+                    <ol>
+                        {
+                            rooms.map((item, index) =>
+                                <li key={item}>
+                                    {index + 1 + " - "}
+                                    {item}
+                                    <Button onClick={() => { navigate("/videoRoom/" + item) }} variant="outline-dark">Присоединиться</Button>
+                                </li>
+                            )
+                        }
+                    </ol>
+                    <hr />
+                    <Button onClick={() => { navigate("/videoRoom/" + v4()) }} variant="dark">Новая комната</Button>
+                </section>
+            </main>
+        </>
     )
 }
 export default ConnectionToVideoRoomPage

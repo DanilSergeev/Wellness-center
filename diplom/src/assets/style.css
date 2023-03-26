@@ -1,7 +1,14 @@
 :root {
     --heightCarusel: 620px;
+    --colorFirst:#7A45C0;
+    --colorSecond:#f63a07;
 }
-
+.colorFirst{
+    color: var(--colorFirst);
+}
+.colorSecond{
+    color: var(--colorSecond);
+}
 * {
     margin: 0;
     padding: 0;
@@ -30,8 +37,13 @@ header {
 
 footer {
     min-height: 10vh;
-    background: rgb(35, 35, 35);
+    background: rgb(20, 20, 20);
     margin-top: auto;
+    color: rgb(102, 102, 102);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 main {
@@ -168,12 +180,12 @@ main {
 
 .link_a {
     text-decoration: none;
-    color: inherit;
+    color: var(--bs-nav-link-color);
     transition: 0.1s all linear;
 }
 
 .link_a:hover {
-    color: #f63a07;
+    color: var(--colorSecond);
 }
 .link_a img{
     background-size: cover;
@@ -193,7 +205,7 @@ ol {
 .line {
     height: 280px;
     background: url(../assets/img/line.jpg);
-    border-bottom: 8px solid #f63a07;
+    border-bottom: 8px solid var(--colorSecond);
     overflow: hidden;
     position: relative;
 }
@@ -301,7 +313,7 @@ ol {
 .aboutUsPage section ul li div h3{
     font-size: 64px;
     font-weight: bold;
-    color: #f63a07;
+    color: var(--colorSecond);
     font-family: fantasy;
     padding-right: 4vh;
 }
@@ -311,4 +323,70 @@ ol {
     font-weight: 600;
     font-size: 22px;
     text-align: center;
+}
+.homePage_ourTeam{
+    text-align: center;
+}
+.homePage_ourTeam_cards{
+    text-align: left;
+
+}
+.homePage_ourTeam_cards .active {
+    display: flex;
+    justify-content: space-around;
+}
+.homePage_ourTeam_cards .carousel-control-next, .homePage_ourTeam_cards .carousel-control-prev{
+    width: 3%;
+}
+.homePage_ourTeam_cards .card-img{
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;
+    margin: 0 auto;
+    box-shadow: 0px 0px 0px 4px #d3d3d383;
+    transition: all 0.1s linear;
+
+}
+.homePage_ourTeam_cards .card-body{
+    flex-direction: column;
+    display: flex;
+}
+.homePage_ourTeam_cards .card{
+    border: 4px solid #d3d3d383;
+    border-radius: 0;
+    padding: 1.8rem;
+    transition: all 0.1s linear;
+}
+.homePage_ourTeam_cards .card:hover .card-img{
+    box-shadow: 0px 0px 0px 4px var(--colorSecond);
+}
+.homePage_ourTeam_cards .card:hover{
+    border: 4px solid var(--colorSecond);
+}
+.myHr{
+    width: 7rem;
+    margin: 1.5rem auto;
+    border: 2px dashed var(--colorFirst);
+    opacity: 1;
+}
+.homePage_AboutUS{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.homePage_AboutUS div:first-child{
+    position: relative;
+    padding: 5rem 4rem;
+    z-index: 3;
+    background-color: #F2F2F2;
+    max-width: 50% ;
+    
+}
+.homePage_AboutUS div:last-child{
+    max-width: 60%;
+    overflow: hidden;
+}
+.homePage_AboutUS img{
+    max-width: -webkit-fill-available;
+    z-index: 2;
 }
