@@ -25,7 +25,7 @@ function layout(clientNumber = 1) {
         if (arr.length === 1 && row.length === 1) {
             return [{ width: "100%", height }]
         }
-        if(arr.length <= 4){
+        if (arr.length <= 4) {
             return row.map(() => ({
                 width: "50%", height
             }))
@@ -70,13 +70,13 @@ const VideoRoomPage = () => {
                         <div>12:19</div>
                     </li>
                     <li>
-                    <h6>Имя фамилия</h6>
+                        <h6>Имя фамилия</h6>
                         <p>Lorem  veniam reprehenderit eligendi et, rerum modi voluptates delectus quis quae rem aperiam repellat sed sunt atque neque omnis officia?</p>
                         <div>12:59</div>
                     </li>
                 </ul>
                 <div className="formSendMessage">
-                    <input type="text" class="form-control" placeholder="Новое сообщение"/>
+                    <input type="text" class="form-control" placeholder="Новое сообщение" />
                     <button><i class='fas fa-location-arrow'></i></button>
                 </div>
             </div>

@@ -41,18 +41,20 @@ const AboutUsPage = () => {
                     <img src={aboutUs} alt="aboutUsFOto" />
                 </div>
             </section>
-            <section className="wrapper bg-color-white indent-top-sm indent-bot">
-                <ul>
-                    {arrText.map((item, index) =>
-                        <li className="indent-top-sm" key={index}>
-                            <div>
-                                <h3>{index +1}</h3>
-                                <p>{item.label}</p>
-                            </div>
-                            {item.text}
-                        </li>
-                    )}
-                </ul>
+            <section className="bg-color-white indent-top-sm indent-bot">
+                <div className="wrapper">
+                    <ul>
+                        {arrText.map((item, index) =>
+                            <li className="indent-top-sm" key={index}>
+                                <div>
+                                    <h3>{index + 1}</h3>
+                                    <p>{item.label}</p>
+                                </div>
+                                {item.text}
+                            </li>
+                        )}
+                    </ul>
+                </div>
             </section>
 
         </main>
