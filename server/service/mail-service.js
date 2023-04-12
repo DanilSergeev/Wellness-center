@@ -1,4 +1,4 @@
-import { createTransport } from "nodemailer";
+const { createTransport } = require("nodemailer");
 
 class MailService {
   constructor() {
@@ -17,10 +17,20 @@ class MailService {
       from: process.env.MAIL_USER,
       to: process.env.MAIL_USER,
       subject: "Сообщение",
-      text: `\nИмя пользователя - ${name}\nОт ${email}` + text,
+      html: `
+      <div>
+        <h1>Сообщение</h1>
+        <p>Имя пользователя: ${name}</p>
+        <p>От: ${email}</p>
+        <hr />
+        <p>${text}</p>
+      </div>
+      `,
+      // text: `\nИмя пользователя - ${name}\nОт ${email}` + text,
     });
+    return { status: 200 }
   }
-  async sendActivationMail(to, link){
+  async sendActivationMail(to, link) {
     await this.transporter.sendMail({
       from: process.env.MAIL_USER,
       to,
@@ -28,15 +38,11 @@ class MailService {
       html: `
       <div>
         <h1>Подтвердите почту</h1>
-        <p>${link}</p>
+        <a href="${link}">${link}</a>
       </div>
       `
     })
   }
 
 }
-const mailService = new MailService()
-export default mailService
-
-
-
+module.exports = new MailService()
