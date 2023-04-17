@@ -1,8 +1,12 @@
-import { combineReducers, createStore } from "redux"
-import { reduser } from "./test"
+import { combineReducers } from "redux"
+import { legacy_createStore as createStore, legacy_createStore } from "redux";
+import { authReduser } from "./auth-reduser"
+import { userReduser } from "./user-reduser"
+import { composeWithDevTools } from "redux-devtools-extension"
 
 const rootReduser = combineReducers({
-    test: reduser
+    authReduser,
+    userReduser
 })
 
-export const store = createStore(rootReduser)
+export const store = createStore(rootReduser, composeWithDevTools())

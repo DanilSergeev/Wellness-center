@@ -10,14 +10,31 @@ import AboutUsPage from './pages/AboutUsPage';
 import ContactsPage from './pages/ContactsPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { checkAuthAction } from './store/auth-reduser';
+import axios from "axios"
 
 function App() {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    try {
+      ( async () => {
+        if (localStorage.getItem("token")) {
+          const response = await axios.get(`${process.env.REACT_APP_API_URL}/refresh`, { withCredentials: true })
+
+          dispatch(checkAuthAction(response))
+        }
+      })()
+    } catch (error) {
+      console.log(error)
+    }
+  }, [])
+
   return (
     <BrowserRouter>
-    <Header>
-
-    </Header>
-
+      <Header />
 
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -27,13 +44,10 @@ function App() {
         <Route path="/contacts" element={<ContactsPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        
+
       </Routes>
 
-
-      <Footer>
-
-      </Footer>
+      <Footer />
     </BrowserRouter>
 
   );

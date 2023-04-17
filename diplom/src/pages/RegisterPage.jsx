@@ -4,10 +4,38 @@ import Line from "../modules/Line"
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import logo from "../assets/img/logo.png"
+import { useState } from 'react';
+import Alert from 'react-bootstrap/Alert';
+import AuthService from '../services/authService';
+import { useDispatch } from "react-redux"
+import { setRegisterUserAction } from '../store/auth-reduser';
 
 
 
 const RegisterPage = () => {
+    const dispatch = useDispatch()
+
+
+    const [email, setEmail] = useState()
+    const [password, setPassword] = useState()
+    const [rePassword, setRePassword] = useState()
+    const [alert, setAlert] = useState({ show: false, text: "", variant: "warning" })
+
+
+    const sendDataRegister = async () => {
+        setAlert(prev => ({ ...prev, show: false }))
+        try {
+            if (password !== rePassword) {
+                return setAlert(prev => ({ ...prev, show: true, text: `Пароли не совпадают`, variant: "warning" }))
+            }
+            const response = await AuthService.register(email, password, "USER")
+            dispatch( setRegisterUserAction(response))
+
+        } catch (error) {
+            console.log(error)
+            setAlert(prev => ({ ...prev, show: true, text: `Ошибка = ${error.response.data.message}`, variant: "danger" }))
+        }
+    }
 
     return (
         <main >
@@ -18,32 +46,30 @@ const RegisterPage = () => {
                 <Form>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>
-                        ФОРМА РЕГИСТРАЦИИ
+                            ФОРМА РЕГИСТРАЦИИ
                         </Form.Label>
                     </Form.Group>
-
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Введите ваш логин:</Form.Label>
-                        <Form.Control type="email" placeholder="Введите логин" />
+                        <Form.Control value={email} onChange={e => setEmail(e.target.value)} type="email" placeholder="Введите логин" />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Label>Введите ваш пароль:</Form.Label>
-                        <Form.Control type="password" placeholder="Введите пароль" />
+                        <Form.Control value={password} onChange={e => setPassword(e.target.value)} type="password" placeholder="Введите пароль" />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Label>Повторите ваш пароль:</Form.Label>
-                        <Form.Control type="password" placeholder="Введите пароль" />
+                        <Form.Control value={rePassword} onChange={e => setRePassword(e.target.value)} type="password" placeholder="Введите пароль" />
                     </Form.Group>
 
 
+                    <Alert show={alert.show} variant={alert.variant} onClick={() => setAlert(prev => ({ ...prev, show: false }))}>
+                        {alert.text}
+                    </Alert>
 
-                    {/* <Alert variant="success">
-                    Сообщение успешно отправлено (добавить кнопку скрытия)
-                    </Alert> */}
-
-                    <Button variant="danger" >
+                    <Button variant="danger" onClick={() => sendDataRegister()}>
                         Отправить
                     </Button>
                 </Form>

@@ -3,15 +3,34 @@ import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import Line from '../modules/Line';
 import { useState } from 'react';
+import MailService from '../services/mailService';
 
 const ContactsPage = () => {
     const [name, setName] = useState('')
-    const [eamil, setEmail] = useState('')
+    const [email, setEmail] = useState('')
     const [message, setMessage] = useState('')
 
+    const [alert, setAlert] = useState({ show: false, text: "", variant: "success" })
+    const [disabledButton, setDisabledButton] = useState(true)
 
-    const sendMessageFun = () => {
-        // mailServiceInstance.sendMail(name, eamil, message)
+    const sendMessageFun = async () => {
+        try {
+            const answer = await MailService.sendMassage(
+                name.split(" ").map(item => item[0].toUpperCase() + item.slice(1)).join(" ").trim(),
+                email.trim(),
+                message.trim()
+            )
+            setAlert(prev => ({ ...prev, show: true, text: `Сообщение успешно отправлено - ${answer.response.substr(0, 12)}`, variant: "success" }))
+        } catch (error) {
+            setAlert(prev => ({ ...prev, show: true, text: `Сообщение не отправлено - ${error.response.data.message}`, variant: "danger" }))
+        }
+    }
+    const validateFun = () => {
+        if (name.length >= 2 && email.length >= 6 && message.length > 6) {
+            setDisabledButton(() => false)
+        } else {
+            setDisabledButton(() => true)
+        }
     }
 
     return (
@@ -42,7 +61,7 @@ const ContactsPage = () => {
             </section>
             <section className='bg-color-white indent-top-sm indent-bot'>
                 <div className='wrapper'>
-                    <Form>
+                    <Form onChange={() => validateFun()}>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>
                                 ОСТАВИТЬ СООБЩЕНИЕ
@@ -56,7 +75,7 @@ const ContactsPage = () => {
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Электронная почта:</Form.Label>
-                            <Form.Control value={eamil} onChange={e => setEmail(e.target.value)} type="email" placeholder="Введите вашу электронную почту" />
+                            <Form.Control value={email} onChange={e => setEmail(e.target.value)} type="email" placeholder="Введите вашу электронную почту" />
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -64,11 +83,11 @@ const ContactsPage = () => {
                             <Form.Control value={message} onChange={e => setMessage(e.target.value)} as="textarea" rows={3} placeholder="Введите сообщение" />
                         </Form.Group>
 
-                        <Alert variant="success">
-                    Сообщение успешно отправлено (добавить кнопку скрытия)
-                    </Alert>
+                        <Alert show={alert.show} variant={alert.variant} onClick={() => setAlert(prev => ({ ...prev, show: false }))}>
+                            {alert.text}
+                        </Alert>
 
-                        <Button variant="danger" >
+                        <Button disabled={disabledButton} variant="danger" onClick={() => sendMessageFun()} >
                             Отправить
                         </Button>
                     </Form>

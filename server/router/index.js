@@ -18,11 +18,12 @@ router.post('/register',
 router.post('/login', userController.login)
 router.post('/logout', userController.logout)
 router.get('/activate/:link', userController.activate)
-router.get('/users',  userController.getUsers)
 router.get('/refresh', userController.refresh)
+router.get('/users',  userController.getUsers)
 
 router.get('/doctors', doctorController.getDoctors)
 router.get('/doctor/:id', doctorController.getDoctor)
+router.put('/doctor/update/:id', checkRoleMiddlware("DOCTOR"),  authMiddlware, doctorController.updateDoctor)
 
 
 
@@ -33,7 +34,6 @@ router.post('/mail-send',
     body('text').isLength({ min: 6 }),
     mailController.mailSend
 )
-router.put('/doctor/update/:id', checkRoleMiddlware("DOCTOR"),  authMiddlware, doctorController.updateDoctor)
 
 
 

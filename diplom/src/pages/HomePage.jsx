@@ -7,8 +7,8 @@ import imgThree from '../assets/img/3333.jpg'
 import homePageAboutUs from '../assets/img/homePageAboutUs.jpg'
 import { Link } from 'react-router-dom';
 
-
 const HomePage = () => {
+
     return (
         <main>
             <section className='welcomCarusel'>
@@ -35,7 +35,7 @@ const HomePage = () => {
                 </Carousel>
                 <Card className='wrapper cardCarusel'>
                     <Card.Body>
-                        <Card.Title>Квалифицированная помощь онлайн</Card.Title>
+                        <Card.Title onClick={() => test()}>Квалифицированная помощь онлайн</Card.Title>
                         <Card.Text>
                             Добро пожаловать в нашу компанию, которая предоставляет медицинские консультации с помощью видеосвязи. Мы стремимся сделать медицинскую помощь максимально доступной и удобной для каждого пациента.
 
@@ -82,8 +82,8 @@ const HomePage = () => {
                 <div className='homePage_AboutUS wrapper'>
                     <div>
                         <h2>О НАШЕЙ <span className='colorFirst'>КОМПАНИИ</span></h2>
-                        <p className='mb-4 mt-4'>Мы - медицинский портал, предоставляющий доступ к высококвалифицированным врачам и услугам 
-                            здравоохранения через удобную видеосвязь. 
+                        <p className='mb-4 mt-4'>Мы - медицинский портал, предоставляющий доступ к высококвалифицированным врачам и услугам
+                            здравоохранения через удобную видеосвязь.
                             Наша миссия - сделать здоровье доступным и комфортным для всех.
                         </p>
                         <Link to="/aboutUs" className='link_a' ><Button variant="danger">Подробнее</Button></Link>

@@ -13,7 +13,7 @@ class MailService {
     });
   }
   async sendMail(name, email, text = "Нет текста") {
-    await this.transporter.sendMail({
+    const answer = await this.transporter.sendMail({
       from: process.env.MAIL_USER,
       to: process.env.MAIL_USER,
       subject: "Сообщение",
@@ -26,9 +26,8 @@ class MailService {
         <p>${text}</p>
       </div>
       `,
-      // text: `\nИмя пользователя - ${name}\nОт ${email}` + text,
     });
-    return { status: 200 }
+    return answer
   }
   async sendActivationMail(to, link) {
     await this.transporter.sendMail({
