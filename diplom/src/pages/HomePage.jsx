@@ -6,8 +6,27 @@ import imgTwo from '../assets/img/2222.jpg'
 import imgThree from '../assets/img/3333.jpg'
 import homePageAboutUs from '../assets/img/homePageAboutUs.jpg'
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from 'react';
+import { getDoctorsAction } from '../store/dictor-reduser';
+import DoctorService from '../services/doctorService';
 
 const HomePage = () => {
+    const dispatch = useDispatch()
+    const dictorReduser = useSelector(state => state.dictorReduser);
+
+    useEffect(() => {
+        getDoctors()
+    }, [])
+    
+    const getDoctors = async () =>{
+        try {
+            const response = await DoctorService.getDoctors()
+            dispatch(getDoctorsAction(response))
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <main>
@@ -55,21 +74,23 @@ const HomePage = () => {
 
                 <Carousel className='homePage_ourTeam_cards' indicators={false} variant="dark" pause="hover" >
                     {
-                        [...Array(3)].map((_, j) =>
-                            <Carousel.Item>
+                        
+                        [...Array(Math.ceil(dictorReduser.doctors.length/3))].map((_, i) =>
+                            <Carousel.Item key={i}>
                                 {
-                                    [...Array(3)].map((item, index) =>
-                                        <Card style={{ width: '20rem' }}>
+                                    dictorReduser.doctors.map((item, j) => i === Math.floor(j/3) ?
+                                        <Card key={item.id} style={{ width: '20rem' }}>
                                             <Card.Body>
-                                                <Card.Img src='https://picsum.photos/200/300'></Card.Img>
-                                                <Card.Title className="mt-4">Lorem Ipsum {3 * j + index}</Card.Title>
-                                                <Card.Text className='colorSecond'> Должность</Card.Text>
+                                                <Card.Img src={`${process.env.REACT_APP_URL}${item.file}`}></Card.Img>
+                                                <Card.Title className="mt-4">{item.name}</Card.Title>
+                                                <Card.Text className='colorSecond'>{item.position}</Card.Text>
                                                 <Card.Text>
-                                                    Some quick example text to build on the card title and make up the
-                                                    bulk of the card's content.
+                                                    {item.data}
                                                 </Card.Text>
                                             </Card.Body>
                                         </Card>
+                                        :
+                                        <></>
                                     )
                                 }
                             </Carousel.Item>

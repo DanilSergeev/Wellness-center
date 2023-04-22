@@ -14,7 +14,7 @@ module.exports = function (role) {
             const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET)
             req.user = decoded
 
-            if (decoded.role !== role || decoded.role !== "ADMIN") {
+            if (decoded.role !== role && decoded.role !== "ADMIN") {
                 throw next(ApiError.BadRequest(`Нет доступа`))
             }
             next();

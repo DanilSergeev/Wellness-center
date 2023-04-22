@@ -29,11 +29,15 @@ const RegisterPage = () => {
                 return setAlert(prev => ({ ...prev, show: true, text: `Пароли не совпадают`, variant: "warning" }))
             }
             const response = await AuthService.register(email, password, "USER")
-            dispatch( setRegisterUserAction(response))
+            dispatch(setRegisterUserAction(response))
 
         } catch (error) {
             console.log(error)
-            setAlert(prev => ({ ...prev, show: true, text: `Ошибка = ${error.response.data.message}`, variant: "danger" }))
+            if (error?.response?.data?.message !== undefined) {
+                setAlert(prev => ({ ...prev, show: true, text: `Ошибка - ${error?.response?.data?.message}`, variant: "danger" }))
+            } else {
+                setAlert(prev => ({ ...prev, show: true, text: `Ошибка - ${error?.message}`, variant: "danger" }))
+            }
         }
     }
 

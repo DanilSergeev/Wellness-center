@@ -21,8 +21,8 @@ app.use(cors({
     origin: process.env.CLIENT_URL
 }));
 app.use('/api', router);
-app.use(fileupload({}))
 app.use(express.static(path.resolve(__dirname,"static")))
+app.use(fileupload({}))
 
 
 app.use(errorMiddleware);

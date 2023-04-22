@@ -51,7 +51,6 @@ class UserService {
         }
         const userData = tokenService.validateRefreshToken(refresh)
         const tokenFromDB = await tokenService.findToken(refresh)
-        console.log('\n\n\n', userData, '\n\n\n', tokenFromDB)
         if (!userData || !tokenFromDB) {
             throw ApiError.UnauthorizedError()
         }
@@ -60,13 +59,25 @@ class UserService {
         const userDto = new UserDto(user)
         const tokens = tokenService.generateTokens({ ...userDto })
         await tokenService.saveToken(userDto.id, tokens.refreshToken)
-        return {tokens, userDto}
+        return { tokens, userDto }
     }
 
     async getUsers() {
         const usersData = await User.findAll({ attributes: ['id', 'email', 'role'] })
         return usersData
     }
+    async getUser(id) {
+        const usersData = await User.findOne({ where: { id }, attributes: ['id', 'email', 'role', 'isActivated'] })
+        return usersData
+    }
+    async updateUser(id, role) {
+        const userData = await User.update(
+            { role },
+            { where: { id } },
+        )
+        return userData
+    }
+
 
     async activate(activationLink) {
         const user = await User.findOne({ where: { activationLink } })

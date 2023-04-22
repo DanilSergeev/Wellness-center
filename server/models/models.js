@@ -9,7 +9,7 @@ const User = sequelize.define('user', {
   isActivated: { type: DataTypes.BOOLEAN, defaultValue: false },
   activationLink: { type: DataTypes.STRING }
 }, { timestamps: false })
-// acticationLink
+
 
 const TokenSchema = sequelize.define('tokenSchema', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -18,6 +18,7 @@ const TokenSchema = sequelize.define('tokenSchema', {
 
 const Doctor = sequelize.define('doctor', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  name: { type: DataTypes.STRING },
   position: { type: DataTypes.STRING },
   data: { type: DataTypes.STRING },
   file: { type: DataTypes.STRING, allowNull: false, defaultValue: "noimage.jpg" },

@@ -28,7 +28,11 @@ const LoginPage = () => {
             dispatch( setLoginUserAction(response))
         } catch (error) {
             console.log(error)
-            setAlert(prev => ({ ...prev, show: true, text: `Ошибка = ${error.response.data.message}`, variant: "danger" }))
+            if(error?.response?.data?.message !== undefined){
+                setAlert(prev => ({ ...prev, show: true, text: `Ошибка - ${error?.response?.data?.message}`, variant: "danger" }))
+            }else{
+                setAlert(prev => ({ ...prev, show: true, text: `Ошибка - ${error?.message}`, variant: "danger" }))
+            }
         }
     }
 

@@ -61,22 +61,22 @@ export const authReduser = (state = defaultState, action) => {
                 return error
             }
 
-        // case LOGOUT:
-        //     try {
-        //         await AuthService.logout()
-        //         localStorage.removeItem("token")
-        //         return {
-        //             ...state,
-        //             id: null,
-        //             email: null,
-        //             role: "USER",
-        //             isActivated: false,
-        //             isAuth: false
-        //         }
-        //     } catch (error) {
-        //         console.log(error?.message)
-        //         return error
-        //     }
+        case LOGOUT:
+            try {
+                // await AuthService.logout()
+                localStorage.removeItem("token")
+                return {
+                    ...state,
+                    id: null,
+                    email: null,
+                    role: "USER",
+                    isActivated: false,
+                    isAuth: false
+                }
+            } catch (error) {
+                console.log(error?.message)
+                return error
+            }
 
         default:
             return state

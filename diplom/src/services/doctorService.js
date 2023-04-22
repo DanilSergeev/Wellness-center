@@ -5,9 +5,10 @@ export default class DoctorService{
         return $api.get("/doctors")
     }
     static async getDoctor(id){
-        return $api.get(`/doctor/update/${id}`)
+        return $api.get(`/doctor/${id}`)
     }
-    static async updateDoctor(id){// body
-        return $api.put(`/doctor/${id}`)
+    static async updateDoctor(id, formData){
+        return $api.put(`/doctor/update/${id}`, formData)
+        .then(res=>res.data)
     }
 }

@@ -14,7 +14,7 @@ class DoctorService {
     }
     async getDoctor(id) {
         const doctorData = await Doctor.findOne({
-            where: { userId: id },
+            where: { id },
             include: {
                 model: User,
                 where: { role: 'DOCTOR' },
@@ -24,8 +24,11 @@ class DoctorService {
         return doctorData
     }
 
-    async updateDoctor(id, position, data, file) {
-        const beforeData = await Doctor.findOne({ where: { userId: id } })
+    async updateDoctor(id, name, position, data, file) {
+        const beforeData = await Doctor.findOne({ where: { id } })
+        if (!name) {
+            name = beforeData.name
+        }
         if (!position) {
             position = beforeData.position
         }
@@ -37,11 +40,10 @@ class DoctorService {
         }
 
         const doctorData = await Doctor.update(
-            { position, data, file },
-            { where: { userId: id } }
+            { name, position, data, file:  beforeData.file },
+            { where: { id } }
         )
-
-        return doctorData
+        return "Обновлено"
     }
 
 

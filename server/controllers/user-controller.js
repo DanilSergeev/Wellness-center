@@ -62,6 +62,32 @@ class UserController {
             next(error)
         }
     }
+    async getUser(req, res, next) {
+        try {
+            const { id } = req.params;
+            if (!id) {
+                return next(ApiError.BadRequest("ID не передан"))
+            }
+            const usersData = await userService.getUser(id)
+            res.json(usersData)
+        } catch (error) {
+            next(error)
+        }
+    }
+    async updateUser(req, res, next) {
+        try {
+            const { id } = req.params;
+            if (!id) {
+                return next(ApiError.BadRequest("ID не передан"))
+            }
+            const { role } = req.body
+
+            const usersData = await userService.updateUser(id,role)
+            res.json("Обновлено")
+        } catch (error) {
+            next(error)
+        }
+    }
 
     async activate(req, res, next) {
         try {
