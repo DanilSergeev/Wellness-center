@@ -1,4 +1,6 @@
 const { User, Doctor } = require("../models/models")
+const uuid = require("uuid")
+const path = require("path");
 
 
 class DoctorService {
@@ -24,8 +26,25 @@ class DoctorService {
         return doctorData
     }
 
+    
+
+        async getDoctorByUserID(userId) {
+        const doctorData = await Doctor.findOne({
+            where: { userId },
+            include: {
+                model: User,
+                where: { role: 'DOCTOR' },
+                attributes: ['email', 'role']
+            },
+        })
+        return doctorData
+    }
+
+
+
     async updateDoctor(id, name, position, data, file) {
         const beforeData = await Doctor.findOne({ where: { id } })
+        let fileName = ""
         if (!name) {
             name = beforeData.name
         }
@@ -36,11 +55,14 @@ class DoctorService {
             data = beforeData.data
         }
         if (!file) {
-            file = beforeData.file
+            fileName = beforeData.file
+        }else{
+            fileName = uuid.v4() + ".jpg"
+            file.mv(path.resolve(__dirname, "..", "static", fileName))
         }
 
-        const doctorData = await Doctor.update(
-            { name, position, data, file:  beforeData.file },
+        await Doctor.update(
+            { name, position, data, file: fileName },
             { where: { id } }
         )
         return "Обновлено"

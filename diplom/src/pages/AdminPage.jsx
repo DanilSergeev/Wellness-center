@@ -8,11 +8,13 @@ import UserService from "../services/userService";
 import { getUserActoion, getUsersActoion } from "../store/user-reduser";
 import DoctorService from "../services/doctorService";
 import { getDoctorAction, getDoctorsAction } from "../store/dictor-reduser";
+import { Navigate } from 'react-router-dom';
 
 
 
 const AdminPage = () => {
     const dispatch = useDispatch()
+    const authReduser = useSelector(state => state.authReduser);
 
     const userReduser = useSelector(state => state.userReduser);
     const dictorReduser = useSelector(state => state.dictorReduser);
@@ -20,8 +22,6 @@ const AdminPage = () => {
     const [selectedOptionChangeDoctor, setSelectedOptionChangeDoctor] = useState("");
 
     const [alertUser, setAlertUser] = useState({ show: false, text: "", variant: "warning" })
-
-
 
     const [dataUser, setDataUser] = useState({
         role: "",
@@ -82,7 +82,7 @@ const AdminPage = () => {
     useEffect(() => {
         getUsers()
         getDoctors()
-    }, [])
+    }, [alertUser])
 
 
     const sendDataUser = async () => {
@@ -99,12 +99,11 @@ const AdminPage = () => {
     const sendDataDoctor = async () => {
         setAlertUser(prev => ({ ...prev, show: false }))
         try {
-            const formData = new FormData()
-            formData.append('name', dataDoctor.name)
-            formData.append('position', dataDoctor.position)
-            formData.append('data', dataDoctor.data)
-            formData.append('file', dataDoctor.file)
-            console.log(formData)
+            let formData = new FormData()
+            formData.append("name", dataDoctor.name)
+            formData.append("position", dataDoctor.position)
+            formData.append("data", dataDoctor.data)
+            formData.append("file", dataDoctor.file)
 
             const res = await DoctorService.updateDoctor(
                 selectedOptionChangeDoctor,
@@ -117,6 +116,10 @@ const AdminPage = () => {
         }
     }
 
+
+    if (!authReduser.isAuth || authReduser.role !== "ADMIN" || !authReduser.isActivated) {
+        return <Navigate to="/" replace />;
+    }
     return (
         <main >
             <Line title={"ADMIN LIST"} >
@@ -162,9 +165,6 @@ const AdminPage = () => {
                     </Button>
                 </Form>
 
-
-
-
                 <Form>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>
@@ -200,7 +200,7 @@ const AdminPage = () => {
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Вставте фото: ( Текущие занчение - {dataDoctor.file?.name ? dataDoctor.file?.name : dataDoctor.file})</Form.Label>
+                        <Form.Label>Вставте фото: </Form.Label>
                         <Form.Control onChange={e => setDataDoctor(prev => ({ ...prev, file: e.target.files[0] }))} disabled={dataDoctor.isNoSelected} type="file" />
                     </Form.Group>
 

@@ -8,18 +8,18 @@ const {version, validate} = require("uuid")
 
 const PORT = process.env.PORT || 3001;
 
-function getClientRooms() {
+function getClientRooms() { // функция получения комнат
     const { rooms } = io.sockets.adapter;
     return Array.from(rooms.keys()).filter(roomID=> validate(roomID) && version(roomID)===4)
 }
 
-function shareRoomsInfo() {
+function shareRoomsInfo() { // новые комнаты
     io.emit(ACTIONS.SHARE_ROOMS, {
         rooms: getClientRooms()
     })
 }
 
-io.on('connection', socket => {
+io.on('connection', socket => { 
     shareRoomsInfo();
 
     socket.on(ACTIONS.JOIN, config => {

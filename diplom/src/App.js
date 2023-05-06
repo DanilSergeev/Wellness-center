@@ -15,6 +15,8 @@ import { useDispatch } from 'react-redux';
 import { checkAuthAction } from './store/auth-reduser';
 import axios from "axios"
 import AdminPage from './pages/AdminPage';
+import DoctorPage from './pages/DoctorPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
   const dispatch = useDispatch()
@@ -46,6 +48,8 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/admin" element={<AdminPage />} />
+        <Route path="/doctor/:userId" element={<DoctorPage />} />
+        <Route path="*" element={<NotFoundPage />} />
 
       </Routes>
 

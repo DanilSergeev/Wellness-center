@@ -20,6 +20,16 @@ class DoctorController {
         }
     }
 
+    async getDoctorByUserID(req, res, next) {
+        try {
+            const { userId } = req.params
+            const doctorData = await doctorService.getDoctorByUserID(userId)
+            res.json(doctorData)
+        } catch (error) {
+            next(error)
+        }
+    }
+
 
     async updateDoctor(req, res, next) {
         try {
@@ -28,7 +38,11 @@ class DoctorController {
                 return next(ApiError.BadRequest("ID не передан"))
             }
             const {position, data, name} = req.body
-            const file = "ss"
+            let file = null
+            if(req.files){
+                file = req.files.file
+            }
+
             const doctorData = await doctorService.updateDoctor(id, name, position, data, file)
             res.json(doctorData)
         } catch (error) {

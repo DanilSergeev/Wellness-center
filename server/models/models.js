@@ -41,6 +41,28 @@ Doctor.belongsTo(User, {
   },
 });
 
+
+// User.addHook('beforeBulkUpdate', async (user) => {
+//   const prevUser = user.previous('role');
+//   const newUser = user.get('role');
+//   if (prevUser !== 'DOCTOR' && newUser === 'DOCTOR') {
+//     await Doctor.create({ userId: user.id });
+//   }
+// });
+
+
+User.addHook('beforeBulkUpdate', async (user) => {
+  console.log(user.attributes.role)
+  if (user.attributes.role === 'DOCTOR') {
+    const doctor = await Doctor.findOne({ where: { userId: user.where.id }});
+    if (!doctor) {
+      await Doctor.create({ userId: user.where.id });
+    }
+  }
+});
+
+
+
 User.addHook('afterCreate', async (user) => {
   if (user.role === 'DOCTOR') {
     const doctor = await Doctor.findOne({ where: { userId: user.id }});

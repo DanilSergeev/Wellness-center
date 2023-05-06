@@ -6,6 +6,7 @@ const mailController = require("../controllers/mail-controller")
 const { body } = require("express-validator")
 const authMiddlware = require("../middlware/auth-middlware")
 const checkRoleMiddlware = require("../middlware/checkRole-middleware")
+const upload = require('multer')();
 
 
 
@@ -26,6 +27,7 @@ router.put('/user/update/:id', checkRoleMiddlware("ADMIN"),  authMiddlware, user
 
 router.get('/doctors', doctorController.getDoctors)
 router.get('/doctor/:id', doctorController.getDoctor)
+router.get('/doctorById/:userId', doctorController.getDoctorByUserID)
 router.put('/doctor/update/:id', checkRoleMiddlware("DOCTOR"),  authMiddlware, doctorController.updateDoctor)
 
 

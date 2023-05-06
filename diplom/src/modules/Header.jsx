@@ -15,6 +15,7 @@ const Header = () => {
     const dispatch = useDispatch()
     const authReduser = useSelector(state => state.authReduser);
 
+
     const logoutFun = async () => {
         try {
             const response = await AuthService.logout()
@@ -23,6 +24,9 @@ const Header = () => {
             console.log(error)
         }
     }
+
+
+
 
 
     return (
@@ -35,7 +39,12 @@ const Header = () => {
                         <Nav className="me-auto">
                             <Nav.Link><Link to="/aboutUs" className='link_a' >О нас</Link></Nav.Link>
                             <Nav.Link><Link to="/contacts" className='link_a' >Контакты</Link></Nav.Link>
-                            <Nav.Link className='link_a' href="/videoRooms">Видео комнаты </Nav.Link>
+                            {
+                                authReduser.isAuth && authReduser.isActivated?
+                                    <Nav.Link className='link_a' href="/videoRooms">Видео комнаты </Nav.Link>
+                                :
+                                <></>
+                            }
                         </Nav>
                         <Nav>
 
@@ -47,7 +56,10 @@ const Header = () => {
                                             authReduser.role === "ADMIN" ?
                                                 <Nav.Link><Link to="/admin" className='link_a' >Админка</Link></Nav.Link>
                                                 :
-                                                <></>
+                                                authReduser.role === "DOCTOR" ?
+                                                    <Nav.Link><Link to={`/doctor/${authReduser.id}`} className='link_a' >Личный кабинет</Link></Nav.Link>
+                                                    :
+                                                    <></>
                                         }
                                         <Nav.Link onClick={() => logoutFun()} className='link_a' href="#">Выйти с {authReduser.email.substr(0, 12)}</Nav.Link>
                                     </>

@@ -7,13 +7,15 @@ import logo from "../assets/img/logo.png"
 import { useState } from 'react';
 import Alert from 'react-bootstrap/Alert';
 import AuthService from '../services/authService';
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { setRegisterUserAction } from '../store/auth-reduser';
+import { Navigate } from 'react-router-dom';
 
 
 
 const RegisterPage = () => {
     const dispatch = useDispatch()
+    const authReduser = useSelector(state => state.authReduser);
 
 
     const [email, setEmail] = useState()
@@ -30,7 +32,7 @@ const RegisterPage = () => {
             }
             const response = await AuthService.register(email, password, "USER")
             dispatch(setRegisterUserAction(response))
-
+            setAlert(prev => ({ ...prev, show: true, text: `Подтвердите почту - ${email}`, variant: "info" }))
         } catch (error) {
             console.log(error)
             if (error?.response?.data?.message !== undefined) {
@@ -39,6 +41,11 @@ const RegisterPage = () => {
                 setAlert(prev => ({ ...prev, show: true, text: `Ошибка - ${error?.message}`, variant: "danger" }))
             }
         }
+    }
+
+
+    if (authReduser.isAuth && authReduser.isActivated) {
+        return <Navigate to="/" replace />;
     }
 
     return (

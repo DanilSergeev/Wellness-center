@@ -6,13 +6,14 @@ import { Link } from 'react-router-dom';
 import logo from "../assets/img/logo.png"
 import { useState } from "react";
 import Alert from 'react-bootstrap/Alert';
-
-import { useDispatch } from "react-redux"
+import { Navigate } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux"
 import { setLoginUserAction } from "../store/auth-reduser";
 import AuthService from "../services/authService";
 
 const LoginPage = () => {
     const dispatch = useDispatch()
+    const authReduser = useSelector(state => state.authReduser);
     
     
     
@@ -25,7 +26,10 @@ const LoginPage = () => {
         setAlert(prev => ({ ...prev, show: false }))
         try {
             const response = await AuthService.login(email, password)
+            response.user.isActivated ?
             dispatch( setLoginUserAction(response))
+            :
+            setAlert(prev => ({ ...prev, show: true, text: `Подтвердите почту - ${email}`, variant: "info" }))
         } catch (error) {
             console.log(error)
             if(error?.response?.data?.message !== undefined){
@@ -36,6 +40,9 @@ const LoginPage = () => {
         }
     }
 
+    if (authReduser.isAuth && authReduser.isActivated) {
+        return <Navigate to="/" replace />;
+    }
 
     return (
         <main >

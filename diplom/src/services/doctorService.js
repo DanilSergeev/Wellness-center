@@ -7,6 +7,9 @@ export default class DoctorService{
     static async getDoctor(id){
         return $api.get(`/doctor/${id}`)
     }
+    static async getDoctorByUserID(userId){
+        return $api.get(`/doctorById/${userId}`)
+    }
     static async updateDoctor(id, formData){
         return $api.put(`/doctor/update/${id}`, formData)
         .then(res=>res.data)
