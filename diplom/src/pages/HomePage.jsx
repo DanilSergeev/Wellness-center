@@ -81,7 +81,7 @@ const HomePage = () => {
                                     dictorReduser.doctors.map((item, j) => i === Math.floor(j/3) ?
                                         <Card key={item.id} style={{ width: '20rem' }}>
                                             <Card.Body>
-                                                <Card.Img src={`${process.env.REACT_APP_URL}${item.file}`}></Card.Img>
+                                                <Card.Img src={`${process.env.REACT_APP_URL}/${item.file}`}></Card.Img>
                                                 <Card.Title className="mt-4">{item.name}</Card.Title>
                                                 <Card.Text className='colorSecond'>{item.position}</Card.Text>
                                                 <Card.Text>
