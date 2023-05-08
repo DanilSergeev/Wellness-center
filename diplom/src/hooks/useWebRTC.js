@@ -20,6 +20,10 @@ export default function useWebRTC(roomID) {
     [LOCAL_VIDEO]: null
   })
 
+  useEffect(()=>{
+
+  })
+
   useEffect(() => {
     async function handleNewPeer({ peerID, createOffer }) {
       if (peerID in peerConnections.current) {

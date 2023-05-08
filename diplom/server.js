@@ -45,11 +45,16 @@ io.on('connection', socket => {
         });
 
         socket.join(roomID);
+
+
         shareRoomsInfo();
     });
 
+
+
     function leaveRoom() {
         const { rooms } = socket;
+
 
         Array.from(rooms).forEach(roomID => {
             const clients = Array.from(io.sockets.adapter.rooms.get(roomID) || []);
@@ -68,6 +73,7 @@ io.on('connection', socket => {
         })
 
         shareRoomsInfo();
+
     }
 
     socket.on(ACTIONS.LEAVE, leaveRoom);
@@ -86,6 +92,16 @@ io.on('connection', socket => {
             iceCandidate,
         });
     });
+
+    socket.on(ACTIONS.SEND_MESSAGE,(data) => { // прослушивание сообщений в комнате
+        data.email = JSON.stringify(data.email)
+        data.text = JSON.stringify(data.text)
+        io.to(data.peerID).emit(ACTIONS.SEND_MESSAGE, {
+            peerID: socket.id,
+            data
+        });
+    });
+
 
 });
 

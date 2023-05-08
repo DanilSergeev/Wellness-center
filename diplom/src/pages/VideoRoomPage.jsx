@@ -1,9 +1,15 @@
 import { useParams } from "react-router"
 import useWebRTC, { LOCAL_VIDEO } from "../hooks/useWebRTC"
+import { useEffect, useState } from "react"
+import socket from "../socket";
+import ACTIONS from "../socket/actions";
+import { useSelector } from "react-redux"
+import { Navigate } from 'react-router-dom';
 
 
 
 function layout(clientNumber = 1) {
+
     const pairs = Array.from({ length: clientNumber }).reduce((acc, next, index, arr) => {
         if (index % 2 === 0 && clientNumber <= 4) {
             acc.push(arr.slice(index, index + 2))
@@ -36,10 +42,39 @@ function layout(clientNumber = 1) {
 }
 
 const VideoRoomPage = () => {
+    const authReduser = useSelector(state => state.authReduser);
+    const [time, setTime] = useState('')
+    const [text, setTest] = useState('')
+    const [massager, setMassager] = useState([])
+
+
     const { id: roomID } = useParams()
     const { clients, provideMediaRef } = useWebRTC(roomID)
     const videoLayout = layout(clients.length)
 
+
+    useEffect(() => {
+        socket.on(ACTIONS.SEND_MESSAGE, (data) => {
+            setMassager(prev => [...prev, data]);
+        });
+    }, [])
+
+
+    const getTimeNow = () => {
+        let now = new Date();
+        let hours = now.getHours().toString().padStart(2, '0');
+        let minutes = now.getMinutes().toString().padStart(2, '0');
+        return hours + ':' + minutes;
+    }
+
+    const sendMessageFun = () => {
+        setTime(getTimeNow())
+        socket.emit(ACTIONS.SEND_MESSAGE, ({ peerID: roomID, text, email: authReduser.email }))
+    }
+
+    if (!authReduser.isAuth && !authReduser.isActivated) {
+        return <Navigate to="/" replace />;
+    }
 
     return (
         <main className="videoRoomMain">
@@ -65,19 +100,21 @@ const VideoRoomPage = () => {
                 </div>
                 <ul>
                     <li>
-                        <h6>Имя фамилия</h6>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur earum doloribus veniam reprehenderit eligendi et, rerum modi voluptates delectus quis quae rem aperiam repellat sed sunt atque neque omnis officia?</p>
-                        <div>12:19</div>
+                        <p>Добро пожаловать в чат</p>
                     </li>
-                    <li>
-                        <h6>Имя фамилия</h6>
-                        <p>Lorem  veniam reprehenderit eligendi et, rerum modi voluptates delectus quis quae rem aperiam repellat sed sunt atque neque omnis officia?</p>
-                        <div>12:59</div>
-                    </li>
+                    {
+                        massager.map((item, index) => (
+                            <li key={index}>
+                                <h6>{JSON.parse(item.data.email)}</h6>
+                                <p>{JSON.parse(item.data.text)}</p>
+                                <div>{time}</div>
+                            </li>
+                        ))
+                    }
                 </ul>
                 <div className="formSendMessage">
-                    <input type="text" class="form-control" placeholder="Новое сообщение" />
-                    <button><i class='fas fa-location-arrow'></i></button>
+                    <input value={text} onChange={e => setTest(e.target.value)} type="text" class="form-control" placeholder="Новое сообщение" />
+                    <button onClick={() => sendMessageFun()}><i class='fas fa-location-arrow'></i></button>
                 </div>
             </div>
         </main>
