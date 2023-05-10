@@ -7,7 +7,7 @@ import imgThree from '../assets/img/3333.jpg'
 import homePageAboutUs from '../assets/img/homePageAboutUs.jpg'
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux"
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 import { getDoctorsAction } from '../store/dictor-reduser';
 import DoctorService from '../services/doctorService';
 
@@ -18,8 +18,8 @@ const HomePage = () => {
     useEffect(() => {
         getDoctors()
     }, [])
-    
-    const getDoctors = async () =>{
+
+    const getDoctors = async () => {
         try {
             const response = await DoctorService.getDoctors()
             dispatch(getDoctorsAction(response))
@@ -74,27 +74,30 @@ const HomePage = () => {
 
                 <Carousel className='homePage_ourTeam_cards' indicators={false} variant="dark" pause="hover" >
                     {
-                        
-                        [...Array(Math.ceil(dictorReduser.doctors.length/3))].map((_, i) =>
-                            <Carousel.Item key={i}>
-                                {
-                                    dictorReduser.doctors.map((item, j) => i === Math.floor(j/3) ?
-                                        <Card key={item.id} style={{ width: '20rem' }}>
-                                            <Card.Body>
-                                                <Card.Img src={`${process.env.REACT_APP_URL}/${item.file}`}></Card.Img>
-                                                <Card.Title className="mt-4">{item.name}</Card.Title>
-                                                <Card.Text className='colorSecond'>{item.position}</Card.Text>
-                                                <Card.Text>
-                                                    {item.data?.substr(0, 200)}
-                                                </Card.Text>
-                                            </Card.Body>
-                                        </Card>
-                                        :
-                                        <></>
-                                    )
-                                }
-                            </Carousel.Item>
-                        )
+                        dictorReduser.doctors.length ?
+                            [...Array(Math.ceil(dictorReduser.doctors.length / 3))].map((_, i) =>
+                                <Carousel.Item key={i}>
+                                    {
+                                        dictorReduser.doctors.map((item, j) => i === Math.floor(j / 3)
+                                            ?
+                                            <Card key={item.id} style={{ width: '20rem' }}>
+                                                <Card.Body>
+                                                    <Card.Img src={`${process.env.REACT_APP_URL}/${item.file}`}></Card.Img>
+                                                    <Card.Title className="mt-4">{item.name}</Card.Title>
+                                                    <Card.Text className='colorSecond'>{item.position}</Card.Text>
+                                                    <Card.Text>
+                                                        {item.data?.substr(0, 200)}
+                                                    </Card.Text>
+                                                </Card.Body>
+                                            </Card>
+                                            :
+                                            <Fragment key={`fragment-${j}`} />
+                                        )
+                                    }
+                                </Carousel.Item>
+                            )
+                            :
+                            <></>
                     }
 
                 </Carousel>

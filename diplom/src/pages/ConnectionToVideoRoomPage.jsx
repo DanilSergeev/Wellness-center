@@ -2,22 +2,18 @@ import { useEffect, useRef, useState } from "react"
 import socket from "../socket"
 import ACTIONS from "../socket/actions.js"
 import { v4 } from "uuid"
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation  } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Line from '../modules/Line';
 import { useSelector } from "react-redux";
-import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
 
 const ConnectionToVideoRoomPage = () => {
     const navigate = useNavigate()
     const [rooms, setRooms] = useState([])
     const rootNode = useRef()
     const authReduser = useSelector(state => state.authReduser);
-
-    const [modalShow, setModalShow] = useState(false)
-    const [nameRoom, setNameRoom] = useState("")
-
+    const dictorReduser = useSelector(state => state.dictorReduser);
+    const location = useLocation();
 
     useEffect(() => {
         socket.on(ACTIONS.SHARE_ROOMS, ({ rooms = [] } = {}) => {
@@ -25,7 +21,12 @@ const ConnectionToVideoRoomPage = () => {
                 setRooms(rooms)
             }
         })
-    }, [])
+    }, [location.pathname])
+
+    const createRoom = () => {
+        let roomID = v4()
+        navigate("/videoRoom/" + roomID)
+    }
 
 
     return (
@@ -41,7 +42,7 @@ const ConnectionToVideoRoomPage = () => {
                         {
                             rooms.length ?
                                 rooms.map((item, index) =>
-                                    <li onClick={()=>console.log(rooms)} key={item}>
+                                    <li onClick={() => console.log(rooms)} key={item}>
                                         {index + 1 + " - "}
                                         {item}
                                         <Button onClick={() => { navigate("/videoRoom/" + item) }} variant="outline-dark">Присоединиться</Button>
@@ -55,24 +56,11 @@ const ConnectionToVideoRoomPage = () => {
                     {
                         authReduser.role === "DOCTOR" || "ADMIN" ?
 
-                            <Button onClick={() => setModalShow(true)} variant="danger">Новая комната</Button>
+                            <Button onClick={() => createRoom()} variant="danger">Новая комната</Button>
                             :
                             <></>
                     }
-                    <Modal show={modalShow} onHide={() => setModalShow(false)}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>Форма создания комнаты</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <Form.Group>
-                                <Form.Label>Введите название комнаты:</Form.Label>
-                                <Form.Control value={nameRoom} onChange={e => setNameRoom(e.target.value)} type="text" placeholder="Введите название комнаты" />
-                            </Form.Group>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button onClick={() => { navigate("/videoRoom/" + v4()) }} variant="danger">Создать</Button>
-                        </Modal.Footer>
-                    </Modal>
+
                 </section>
             </main>
         </>

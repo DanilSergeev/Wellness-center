@@ -2,11 +2,11 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import logo from "../assets/img/logo.png"
 import { logoutAction } from '../store/auth-reduser';
 import { useDispatch, useSelector } from "react-redux"
 import AuthService from '../services/authService';
-
 
 
 const colorTham = "light";
@@ -37,11 +37,13 @@ const Header = () => {
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="me-auto">
-                            <Nav.Link><Link to="/aboutUs" className='link_a' >О нас</Link></Nav.Link>
-                            <Nav.Link><Link to="/contacts" className='link_a' >Контакты</Link></Nav.Link>
+                            <Nav.Link as={NavLink} to="/aboutUs" className='link_a'>О нас</Nav.Link>
+                            <Nav.Link as={NavLink} to="/contacts" className='link_a' >Контакты</Nav.Link>
                             {
                                 authReduser.isAuth && authReduser.isActivated?
-                                    <Nav.Link className='link_a' href="/videoRooms">Видео комнаты </Nav.Link>
+                                <Nav.Link as={NavLink} to="/videoRooms" className='link_a' >Видео комнаты</Nav.Link>
+
+                                    // <Nav.Link className='link_a' href="/videoRooms">Видео комнаты </Nav.Link>
                                 :
                                 <></>
                             }
@@ -54,10 +56,10 @@ const Header = () => {
                                     <>
                                         {
                                             authReduser.role === "ADMIN" ?
-                                                <Nav.Link><Link to="/admin" className='link_a' >Админка</Link></Nav.Link>
+                                                <Nav.Link as={NavLink} to="/admin" className='link_a'>Админка</Nav.Link>
                                                 :
                                                 authReduser.role === "DOCTOR" ?
-                                                    <Nav.Link><Link to={`/doctor/${authReduser.id}`} className='link_a' >Личный кабинет</Link></Nav.Link>
+                                                    <Nav.Link as={NavLink} to={`/doctor/${authReduser.id}`} className='link_a' >Личный кабинет</Nav.Link>
                                                     :
                                                     <></>
                                         }
@@ -65,8 +67,8 @@ const Header = () => {
                                     </>
                                     :
                                     <>
-                                        <Nav.Link><Link to="/login" className='link_a' >Авторизация</Link></Nav.Link>
-                                        <Nav.Link><Link to="/register" className='link_a' >Регистрация</Link></Nav.Link>
+                                        <Nav.Link as={NavLink}  to="/login" className='link_a'>Авторизация</Nav.Link>
+                                        <Nav.Link as={NavLink} to="/register" className='link_a'>Регистрация</Nav.Link>
 
                                     </>
 

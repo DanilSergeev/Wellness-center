@@ -10,7 +10,7 @@ import AboutUsPage from './pages/AboutUsPage';
 import ContactsPage from './pages/ContactsPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { checkAuthAction } from './store/auth-reduser';
 import axios from "axios"
@@ -20,6 +20,7 @@ import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
   const dispatch = useDispatch()
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     try {
@@ -33,7 +34,12 @@ function App() {
     } catch (error) {
       console.log(error)
     }
+    setIsLoading(false)
   }, [])
+
+  if(isLoading){
+    return <div>Загрузка...</div>
+  }
 
   return (
     <BrowserRouter>

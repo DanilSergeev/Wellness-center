@@ -9,7 +9,7 @@ const ACTIONS = {
     ICE_CANDIDATE: 'ice-candidate', 
     SESSION_DESCRIPTION: 'session-description', // новая сесия
 
-    SEND_MESSAGE: 'send-message'
+    SEND_MESSAGE: 'send-message',
   };
   
   module.exports = ACTIONS;

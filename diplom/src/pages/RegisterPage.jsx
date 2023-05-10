@@ -18,9 +18,9 @@ const RegisterPage = () => {
     const authReduser = useSelector(state => state.authReduser);
 
 
-    const [email, setEmail] = useState()
-    const [password, setPassword] = useState()
-    const [rePassword, setRePassword] = useState()
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [rePassword, setRePassword] = useState('')
     const [alert, setAlert] = useState({ show: false, text: "", variant: "warning" })
 
 
@@ -55,22 +55,22 @@ const RegisterPage = () => {
             </Line>
             <section className='wrapper indent-top indent-bot authSection'>
                 <Form>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Group className="mb-3" >
                         <Form.Label>
                             ФОРМА РЕГИСТРАЦИИ
                         </Form.Label>
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Group className="mb-3" >
                         <Form.Label>Введите ваш логин:</Form.Label>
                         <Form.Control value={email} onChange={e => setEmail(e.target.value)} type="email" placeholder="Введите логин" />
                     </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Group className="mb-3" >
                         <Form.Label>Введите ваш пароль:</Form.Label>
                         <Form.Control value={password} onChange={e => setPassword(e.target.value)} type="password" placeholder="Введите пароль" />
                     </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Group className="mb-3" >
                         <Form.Label>Повторите ваш пароль:</Form.Label>
                         <Form.Control value={rePassword} onChange={e => setRePassword(e.target.value)} type="password" placeholder="Введите пароль" />
                     </Form.Group>

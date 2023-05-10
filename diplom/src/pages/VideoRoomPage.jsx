@@ -59,7 +59,6 @@ const VideoRoomPage = () => {
         });
     }, [])
 
-
     const getTimeNow = () => {
         let now = new Date();
         let hours = now.getHours().toString().padStart(2, '0');
@@ -113,8 +112,8 @@ const VideoRoomPage = () => {
                     }
                 </ul>
                 <div className="formSendMessage">
-                    <input value={text} onChange={e => setTest(e.target.value)} type="text" class="form-control" placeholder="Новое сообщение" />
-                    <button onClick={() => sendMessageFun()}><i class='fas fa-location-arrow'></i></button>
+                    <input value={text} onChange={e => setTest(e.target.value)} type="text" className="form-control" placeholder="Новое сообщение" />
+                    <button onClick={() => sendMessageFun()}><i className='fas fa-location-arrow'></i></button>
                 </div>
             </div>
         </main>

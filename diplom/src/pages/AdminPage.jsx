@@ -186,17 +186,17 @@ const AdminPage = () => {
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Введите имя  (Текущие занчение - {dictorReduser.doctor?.name}):</Form.Label>
-                        <Form.Control value={dataDoctor.name} onChange={e => setDataDoctor(prev => ({ ...prev, name: e.target.value }))} disabled={dataDoctor.isNoSelected} type="text" placeholder="Введите имя " />
+                        <Form.Control value={dataDoctor.name !== null ?dataDoctor.name:''} onChange={e => setDataDoctor(prev => ({ ...prev, name: e.target.value }))} disabled={dataDoctor.isNoSelected} type="text" placeholder="Введите имя " />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Введите должность  (Текущие занчение - {dictorReduser.doctor?.position}):</Form.Label>
-                        <Form.Control value={dataDoctor.position} onChange={e => setDataDoctor(prev => ({ ...prev, position: e.target.value }))} disabled={dataDoctor.isNoSelected} type="text" placeholder="Введите должность" />
+                        <Form.Control value={dataDoctor.position!== null ?dataDoctor.position:''} onChange={e => setDataDoctor(prev => ({ ...prev, position: e.target.value }))} disabled={dataDoctor.isNoSelected} type="text" placeholder="Введите должность" />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Введите данные  (Текущие занчение - {dictorReduser.doctor?.data}):</Form.Label>
-                        <Form.Control value={dataDoctor.data} onChange={e => setDataDoctor(prev => ({ ...prev, data: e.target.value }))} disabled={dataDoctor.isNoSelected} type="text" placeholder="Введите данные" />
+                        <Form.Control value={dataDoctor.data!== null ?dataDoctor.data:''} onChange={e => setDataDoctor(prev => ({ ...prev, data: e.target.value }))} disabled={dataDoctor.isNoSelected} type="text" placeholder="Введите данные" />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
