@@ -72,7 +72,6 @@ const DoctorPage = () => {
             )
             
             setAlertUser(prev => ({ ...prev, show: true, text: `${res}`, variant: "success" }))
-            // getDoctor(id.userId)
         } catch (error) {
             setAlertUser(prev => ({ ...prev, show: true, text: `Ошибка - ${error?.message}`, variant: "danger" }))
         }
