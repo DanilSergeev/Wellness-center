@@ -42,8 +42,6 @@ const Header = () => {
                             {
                                 authReduser.isAuth && authReduser.isActivated?
                                 <Nav.Link as={NavLink} to="/videoRooms" className='link_a' >Видео комнаты</Nav.Link>
-
-                                    // <Nav.Link className='link_a' href="/videoRooms">Видео комнаты </Nav.Link>
                                 :
                                 <></>
                             }

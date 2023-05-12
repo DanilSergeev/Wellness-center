@@ -20,9 +20,6 @@ export default function useWebRTC(roomID) {
     [LOCAL_VIDEO]: null
   })
 
-  useEffect(()=>{
-
-  })
 
   useEffect(() => {
     async function handleNewPeer({ peerID, createOffer }) {
@@ -87,7 +84,7 @@ export default function useWebRTC(roomID) {
   }, [])
 
   useEffect(() => {
-    async function setRemoteMedia({peerID, sessionDescription: remoteDescription}) {
+    async function setRemoteMedia({ peerID, sessionDescription: remoteDescription }) {
       await peerConnections.current[peerID]?.setRemoteDescription(
         new RTCSessionDescription(remoteDescription)
       );
@@ -112,7 +109,7 @@ export default function useWebRTC(roomID) {
   }, []);
 
   useEffect(() => {
-    socket.on(ACTIONS.ICE_CANDIDATE, ({peerID, iceCandidate}) => {
+    socket.on(ACTIONS.ICE_CANDIDATE, ({ peerID, iceCandidate }) => {
       peerConnections.current[peerID]?.addIceCandidate(
         new RTCIceCandidate(iceCandidate)
       );
@@ -124,7 +121,7 @@ export default function useWebRTC(roomID) {
   }, []);
 
   useEffect(() => {
-    const handleRemovePeer = ({peerID}) => {
+    const handleRemovePeer = ({ peerID }) => {
       if (peerConnections.current[peerID]) {
         peerConnections.current[peerID].close();
       }

@@ -22,8 +22,6 @@ function layout(clientNumber = 1) {
 
 
 
-
-
     const rowsNumber = pairs.length
     const height = `${100 / rowsNumber}%`
 
@@ -74,6 +72,11 @@ const VideoRoomPage = () => {
     if (!authReduser.isAuth && !authReduser.isActivated) {
         return <Navigate to="/" replace />;
     }
+    const handleKeyDown = (event) => {
+        if (event.key === "Enter") {
+            sendMessageFun()
+        }
+      };
 
     return (
         <main className="videoRoomMain">
@@ -112,7 +115,7 @@ const VideoRoomPage = () => {
                     }
                 </ul>
                 <div className="formSendMessage">
-                    <input value={text} onChange={e => setTest(e.target.value)} type="text" className="form-control" placeholder="Новое сообщение" />
+                    <input onKeyDown={handleKeyDown} onChange={e => setTest(e.target.value)} type="text" className="form-control" placeholder="Новое сообщение" />
                     <button onClick={() => sendMessageFun()}><i className='fas fa-location-arrow'></i></button>
                 </div>
             </div>

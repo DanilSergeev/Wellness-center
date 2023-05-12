@@ -91,6 +91,11 @@ io.on('connection', socket => {
             iceCandidate,
         });
     });
+    socket.on(ACTIONS.RELAY_ICE, () => {
+        io.emit(ACTIONS.GET_ROOMS, {
+            rooms: getClientRooms()
+        })
+    });
 
     socket.on(ACTIONS.SEND_MESSAGE,(data) => { // прослушивание сообщений в комнате
         data.email = JSON.stringify(data.email)
@@ -101,7 +106,11 @@ io.on('connection', socket => {
         });
     });
 
-
+    socket.on(ACTIONS.GET_ROOMS, () => {
+        io.emit(ACTIONS.SHARE_ROOMS, {
+          rooms: getClientRooms()
+        });
+      })
 
 
 });

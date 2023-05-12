@@ -10,6 +10,7 @@ const ACTIONS = {
     SESSION_DESCRIPTION: 'session-description', // новая сесия
 
     SEND_MESSAGE: 'send-message',
+    GET_ROOMS: 'get-rooms',
   };
   
   module.exports = ACTIONS;
