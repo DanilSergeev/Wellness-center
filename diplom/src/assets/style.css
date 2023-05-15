@@ -2,6 +2,8 @@
     --heightCarusel: 620px;
     --colorFirst:#7A45C0;
     --colorSecond:#f63a07;
+    --MediaMaxWidth_P: 12px;
+    --MediaMaxWidth_H: 18px;
 }
 .colorFirst{
     color: var(--colorFirst);
@@ -389,4 +391,87 @@ ol {
 .homePage_AboutUS img{
     max-width: -webkit-fill-available;
     z-index: 2;
+}
+@media (max-width: 1024px) {
+    .wrapper{
+        max-width: 990px;
+    }
+    .cardCarusel{
+        max-width: 29rem;
+    }
+}
+@media (max-width: 768px) {
+    .wrapper{
+        max-width: 90%;
+    }
+    .cardCarusel{
+        max-width: 29rem;
+    }
+    .homePage_AboutUS{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .homePage_AboutUS div:last-child,.homePage_AboutUS div:first-child{
+        max-width: inherit;
+    }
+}
+@media (max-width: 425px) {
+    .indent-top{
+        padding-top: 3vh;
+    }
+    .indent-bot{
+        padding-bottom: 4ch;
+    }
+    .caruselMain{
+        display: none;
+    }
+    .cardCarusel{
+        position: static;
+        padding: 4px 18px;
+    }
+    h5{
+        font-size: var(--MediaMaxWidth_H);
+    }
+    p, footer{
+        font-size: var(--MediaMaxWidth_P);
+    }
+    .homePage_AboutUS div:first-child{
+        padding: 3rem 2rem;
+    }
+
+
+    .aboutUsPage section{
+        flex-direction: column;
+    }
+    .aboutUsPage section div{
+        max-width: 96%;
+        text-align: center;
+    }
+    .aboutUsPage section div img{
+        max-height: 230px;
+    }
+    .aboutUsPage section ul{
+        grid-template-columns: 1fr;
+    }
+
+
+    .lineWrapper h1{
+        font-size: 33px;
+    }
+    .lineWrapper p{
+        width: 77%;
+    }
+
+
+    .authSection{
+        flex-direction: column;
+    }
+    .authSection > div, .authSection > form{
+        width: 90%;
+        margin-bottom: 4vh;
+    }
+}
+@media (max-width: 320px) {
+
 }
