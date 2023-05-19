@@ -67,7 +67,7 @@ const ConnectionToVideoRoomPage = () => {
                 <Line title={"VIDEOS ROOMS"} >
                     Сэкономьте время и силы: консультации с врачом из любой точки мира
                 </Line>
-                <section className="indent-top wrapper connectionToVideoRoomMain">
+                <section className="indent-top wrapper connectionToVideoRoomMain indent-bot">
                     <h2>Видео комнаты</h2>
                     <hr />
                     <ol>

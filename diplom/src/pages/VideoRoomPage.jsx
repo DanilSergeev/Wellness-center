@@ -42,8 +42,10 @@ function layout(clientNumber = 1) {
 const VideoRoomPage = () => {
     const authReduser = useSelector(state => state.authReduser);
     const [time, setTime] = useState('')
-    const [text, setTest] = useState('')
+    const [text, setText] = useState('')
     const [massager, setMassager] = useState([])
+
+    const [activChat, setActivChat] = useState(false)
 
 
     const { id: roomID } = useParams()
@@ -65,21 +67,29 @@ const VideoRoomPage = () => {
     }
 
     const sendMessageFun = () => {
-        setTime(getTimeNow())
-        socket.emit(ACTIONS.SEND_MESSAGE, ({ peerID: roomID, text, email: authReduser.email }))
-    }
-
-    if (!authReduser.isAuth && !authReduser.isActivated) {
-        return <Navigate to="/" replace />;
+        if (text) {
+            setTime(getTimeNow())
+            socket.emit(ACTIONS.SEND_MESSAGE, ({ peerID: roomID, text, email: authReduser.email }))
+        }
     }
     const handleKeyDown = (event) => {
         if (event.key === "Enter") {
             sendMessageFun()
         }
-      };
+    };
 
+
+
+
+
+    if (!authReduser.isAuth && !authReduser.isActivated) {
+        return <Navigate to="/" replace />;
+    }
     return (
         <main className="videoRoomMain">
+            {
+                <i onClick={() => setActivChat(true)} className={`fas fa-comment ${activChat ? ' displayNone' : ''}`}></i>
+            }
             <div className="videoWrapper">
                 {clients.map((clientID, index) => {
                     return <div key={clientID} style={videoLayout[index]}>
@@ -96,14 +106,17 @@ const VideoRoomPage = () => {
                     </div>
                 })}
             </div>
-            <div className="videoChat">
-                <div>
-                    Чат
+            <div className={`videoChat ${!activChat ? ' displayNone' : ''}`}>
+                <div className="videoChatTop">
+                    <span>
+                        Чат
+                    </span>
+                    <div onClick={()=> setActivChat(false)}>
+                        X
+                    </div>
                 </div>
+
                 <ul>
-                    <li>
-                        <p>Добро пожаловать в чат</p>
-                    </li>
                     {
                         massager.map((item, index) => (
                             <li key={index}>
@@ -111,14 +124,18 @@ const VideoRoomPage = () => {
                                 <p>{JSON.parse(item.data.text)}</p>
                                 <div>{time}</div>
                             </li>
-                        ))
+                        )).reverse()
                     }
+                    <li>
+                        <p>Добро пожаловать в чат</p>
+                    </li>
                 </ul>
                 <div className="formSendMessage">
-                    <input onKeyDown={handleKeyDown} onChange={e => setTest(e.target.value)} type="text" className="form-control" placeholder="Новое сообщение" />
+                    <input onKeyDown={handleKeyDown} onChange={e => setText(e.target.value)} type="text" className="form-control" placeholder="Новое сообщение" />
                     <button onClick={() => sendMessageFun()}><i className='fas fa-location-arrow'></i></button>
                 </div>
             </div>
+
         </main>
     )
 }
