@@ -9,7 +9,6 @@ import { Navigate } from 'react-router-dom';
 
 
 function layout(clientNumber = 1) {
-
     const pairs = Array.from({ length: clientNumber }).reduce((acc, next, index, arr) => {
         if (index % 2 === 0 && clientNumber <= 4) {
             acc.push(arr.slice(index, index + 2))
@@ -40,12 +39,19 @@ function layout(clientNumber = 1) {
 }
 
 const VideoRoomPage = () => {
+    const screenWidth = window.innerWidth;
     const authReduser = useSelector(state => state.authReduser);
     const [time, setTime] = useState('')
     const [text, setText] = useState('')
     const [massager, setMassager] = useState([])
 
-    const [activChat, setActivChat] = useState(false)
+    const [activChat, setActivChat] = useState(true)
+    
+    useEffect(() => {
+        if (screenWidth<=768) {
+            setActivChat(false)
+        }
+    }, []);
 
 
     const { id: roomID } = useParams()

@@ -60,7 +60,10 @@ const HomePage = () => {
 
 
                         </Card.Text>
-                        <a href="/videoRooms" className='link_a'><Button variant="danger">К комноте</Button></a>
+                        <Link to="/videoRooms">
+                            <Button variant="danger">К комноте</Button>
+                        </Link>
+                        {/* <a href="/videoRooms" className='link_a'><Button variant="danger">К комноте</Button></a> */}
                     </Card.Body>
                 </Card>
             </section>
