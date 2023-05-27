@@ -8,8 +8,13 @@ import { Navigate } from 'react-router-dom';
 
 
 
+const screenWidth = window.innerWidth;
 function layout(clientNumber = 1) {
     const pairs = Array.from({ length: clientNumber }).reduce((acc, next, index, arr) => {
+        if (screenWidth <= 768){
+            return acc
+        }
+
         if (index % 2 === 0 && clientNumber <= 4) {
             acc.push(arr.slice(index, index + 2))
         }
@@ -24,6 +29,8 @@ function layout(clientNumber = 1) {
     const rowsNumber = pairs.length
     const height = `${100 / rowsNumber}%`
 
+
+
     return pairs.map((row, index, arr) => {
         if (arr.length === 1 && row.length === 1) {
             return [{ width: "100%", height }]
@@ -36,19 +43,20 @@ function layout(clientNumber = 1) {
         return [{ width: "33%", height }]
 
     }).flat()
+
+
 }
 
 const VideoRoomPage = () => {
-    const screenWidth = window.innerWidth;
     const authReduser = useSelector(state => state.authReduser);
     const [time, setTime] = useState('')
     const [text, setText] = useState('')
     const [massager, setMassager] = useState([])
 
     const [activChat, setActivChat] = useState(true)
-    
+
     useEffect(() => {
-        if (screenWidth<=768) {
+        if (screenWidth <= 768) {
             setActivChat(false)
         }
     }, []);
@@ -117,7 +125,7 @@ const VideoRoomPage = () => {
                     <span>
                         Чат
                     </span>
-                    <div onClick={()=> setActivChat(false)}>
+                    <div onClick={() => setActivChat(false)}>
                         X
                     </div>
                 </div>
