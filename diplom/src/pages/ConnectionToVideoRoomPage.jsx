@@ -8,6 +8,7 @@ import Line from '../modules/Line';
 import UserService from "../services/userService";
 import { useDispatch, useSelector } from "react-redux"
 import { getUsersActoion } from "../store/user-reduser";
+import { Navigate } from 'react-router-dom';
 
 
 
@@ -18,7 +19,6 @@ const ConnectionToVideoRoomPage = () => {
     const [rooms, setRooms] = useState([])
     const rootNode = useRef()
     const authReduser = useSelector(state => state.authReduser);
-    const userReduser = useSelector(state => state.userReduser);
     const location = useLocation();
 
     useEffect(() => {
@@ -49,18 +49,9 @@ const ConnectionToVideoRoomPage = () => {
     }
 
 
-    // const getEmailTitle =  (hash) => {
-    //     try {
-    //         let id = hash.split(',')[1]
-    //         let res = userReduser.users.filter(item=> item.id === Number(id))
-    //         return res[0].email
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
-
-
-
+    if (!authReduser.isAuth || !authReduser.isActivated) {
+        return <Navigate to="/login" replace />;
+    }
     return (
         <>
             <main ref={rootNode}>
