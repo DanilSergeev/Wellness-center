@@ -89,7 +89,7 @@ const HomePage = () => {
                                                     <Card.Title className="mt-4">{item.name}</Card.Title>
                                                     <Card.Text className='colorSecond'>{item.position}</Card.Text>
                                                     <Card.Text>
-                                                        {item.data?.substr(0, 200)}
+                                                        {item.data?.substr(0, 110)+'...'}
                                                     </Card.Text>
                                                 </Card.Body>
                                             </Card>
